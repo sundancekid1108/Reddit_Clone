@@ -1,3 +1,4 @@
+
 <template>
   <div id="app">
     <nav class="navbar is-black" role="navigation" aria-label="main navigation">

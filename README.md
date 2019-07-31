@@ -8,15 +8,18 @@
   * https://firebase.google.com/docs/auth/web/manage-users
     * Save user on login
       * [✔]Update Rules
-* [ ] Add VuexFire
+* [✔] Add VuexFire
   * https://github.com/posva/vuexfire/tree/firestore
-* [ ] Add a few subreddits in Firestore
+  * https://vuefire.vuejs.org/vuexfire/upgrading-from-v2.html#renamed-imports
+  * vuefire는 버젼이 바뀌어 몇 몇 코드가 수정됨..
+* [✔] Add a few subreddits in Firestore
   * general
   * javascript
   * learn-programming
   * pics
   * funny
-* [ ] Show Subreddits on Home Page
+* [✔] dotenv cofig
+* [✔] Show Subreddits on Home Page
 * [ ] Show Single Subreddit
 * [ ] New Post Form
   * Update Rules

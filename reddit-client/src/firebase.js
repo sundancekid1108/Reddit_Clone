@@ -1,15 +1,16 @@
 /* eslint-disable */
 import firebase from 'firebase';
+require('dotenv').config();
 
-
+console.log(process.env.VUE_APP_APIKEY);
 const firebaseConfig = {
-    apiKey: "AIzaSyCfT1i6hyjg4Gxd8VjnlLEwGH3mpglNa5I",
-    authDomain: "redditclone-dae32.firebaseapp.com",
-    databaseURL: "https://redditclone-dae32.firebaseio.com",
-    projectId: "redditclone-dae32",
-    storageBucket: "redditclone-dae32.appspot.com",
-    messagingSenderId: "421075005621",
-    appId: "1:421075005621:web:5df29029ee1e3784"
+    apiKey: process.env.VUE_APP_APIKEY,
+    authDomain: process.env.VUE_APP_AUTODOMAIN,
+    databaseURL: process.env.VUE_APP_DATABASEURL,
+    projectId: process.env.VUE_APP_PROJECTID,
+    storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+    messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
+    appId: process.env.VUE_APP_APPID
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
