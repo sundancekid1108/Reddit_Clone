@@ -3,7 +3,7 @@
 * [✔] Generate Vue App
 * [✔] Create Firebase Project
   * [✔] STRICT RULES
-* [ ] Add Firebase Auth
+* [✔] Add Firebase Auth
   * https://firebase.google.com/docs/auth/web/google-signin
   * https://firebase.google.com/docs/auth/web/manage-users
     * Save user on login
