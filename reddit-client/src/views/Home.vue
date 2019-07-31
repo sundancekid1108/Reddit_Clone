@@ -2,6 +2,7 @@
   <div class="home">
     
     <a class="button is-danger" @click="login()">Login with google</a>
+    
   </div>
 </template>
 

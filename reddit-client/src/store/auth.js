@@ -1,7 +1,5 @@
-/* eslint-disable eol-last */
 /* eslint-disable */
-import firebase from '../firebase';
-import db from '../db';
+import firebase from '@/firebase';
 
 const state = {
     user: {},
@@ -10,30 +8,29 @@ const state = {
 
 const mutations = {
     setUser(state, user) {
-        state.user = user;
-        state.isLoggedIn = true;
+        if (user) {
+            state.user = user;
+            state.isLoggedIn = true;
+        } else {
+            state.user = {};
+            state.isLoggedIn = false;
+        }
     },
 };
 
 const actions = {
-    async login({ commit }) {
+    async login() {
         const provider = new firebase.auth.GoogleAuthProvider();
-        const profile = await firebase.auth().signInWithPopup(provider);
-        //console.log(profile.user);
-        const setUser = {
-            id: profile.user.uid,
-            name: profile.user.displayName,
-            image: profile.user.photoURL,
-            created_at: firebase.firestore.FieldValue.serverTimestamp(),
-        };
-        db.collection('users').doc(setUser.id).set(setUser);
-        commit('setUser', setUser);
+        await firebase.auth().signInWithPopup(provider);
+    },
+    async logout() {
+        await firebase.auth().signOut();
     },
 };
 
 export default {
     namespaced: true,
     state,
-    actions,
     mutations,
+    actions,
 };

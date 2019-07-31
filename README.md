@@ -7,7 +7,7 @@
   * https://firebase.google.com/docs/auth/web/google-signin
   * https://firebase.google.com/docs/auth/web/manage-users
     * Save user on login
-      * Update Rules
+      * [✔]Update Rules
 * [ ] Add VuexFire
   * https://github.com/posva/vuexfire/tree/firestore
 * [ ] Add a few subreddits in Firestore
