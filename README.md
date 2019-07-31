@@ -1,8 +1,8 @@
 # Full Stack Reddit Clone with Firebase Firestore, Vue.js/Vuex, Bulma
 
 * [✔] Generate Vue App
-* [ ] Create Firebase Project
-  * [ ] STRICT RULES
+* [✔] Create Firebase Project
+  * [✔] STRICT RULES
 * [ ] Add Firebase Auth
   * https://firebase.google.com/docs/auth/web/google-signin
   * https://firebase.google.com/docs/auth/web/manage-users
