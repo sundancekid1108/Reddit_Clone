@@ -20,7 +20,7 @@
   * funny
 * [✔] dotenv cofig
 * [✔] Show Subreddits on Home Page
-* [ ] Show Single Subreddit
+* [✔] Show Single Subreddit
 * [ ] New Post Form
   * Update Rules
 * [ ] Display Posts on Subreddit Page
