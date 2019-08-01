@@ -2,10 +2,10 @@
 import firebase from 'firebase';
 require('dotenv').config();
 
-console.log(process.env.VUE_APP_APIKEY);
+
 const firebaseConfig = {
     apiKey: process.env.VUE_APP_APIKEY,
-    authDomain: process.env.VUE_APP_AUTODOMAIN,
+    authDomain: process.env.VUE_APP_AUTHDOMAIN,
     databaseURL: process.env.VUE_APP_DATABASEURL,
     projectId: process.env.VUE_APP_PROJECTID,
     storageBucket: process.env.VUE_APP_STORAGEBUCKET,

@@ -1,8 +1,9 @@
 
+
 <template>
     
     <section>
-        <h1>{{$route.params.name}}</h1>
+        <h1>{{subreddit.name}}</h1>
         <form @submit.prevent="onCreatePost()">
             <b-field label="Title">
                 <b-input v-model="post.title" required></b-input>
@@ -19,7 +20,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
   export default {
     data: () => ({
         post: {
@@ -29,11 +30,14 @@ import { mapState, mapActions } from 'vuex';
         }
     }),
     mounted() {
-      // this.init();
+      this.initSubreddit(this.$route.params.name);
     },
-    computed: mapState('subreddit', ['posts']),
+    computed: {
+        ...mapState('subreddit', ['posts']),
+        ...mapGetters('subreddit', ['subreddit'])
+    },
     methods: {
-        ...mapActions('subreddit', ['createPost']),
+        ...mapActions('subreddit', ['createPost', 'initSubreddit', 'initPosts']),
         async onCreatePost() {
             if (this.post.title && (this.post.description || this.post.URL)) {
                 await this.createPost(this.post);

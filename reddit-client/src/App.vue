@@ -40,7 +40,7 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   computed: mapState('auth', ['user', 'isLoggedIn']),
-  methods: mapActions('auth', ['login', 'logout']),
+  methods: mapActions('auth', ['login', 'logout'])
 };
 </script>
 

@@ -21,7 +21,7 @@
 * [✔] dotenv cofig
 * [✔] Show Subreddits on Home Page
 * [✔] Show Single Subreddit
-* [ ] New Post Form
+* [✔] New Post Form
   * Update Rules
 * [ ] Display Posts on Subreddit Page
   * Types: Image/Text/Url
