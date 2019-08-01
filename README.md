@@ -23,7 +23,7 @@
 * [✔] Show Single Subreddit
 * [✔] New Post Form
   * Update Rules
-* [ ] Display Posts on Subreddit Page
+* [✔] Display Posts on Subreddit Page
   * Types: Image/Text/Url
 * [ ] UpVote/DownVote Posts
   * Update Rules

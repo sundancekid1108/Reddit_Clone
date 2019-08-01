@@ -4,7 +4,8 @@
     
     <section>
         <h1>{{subreddit.name}}</h1>
-        <form @submit.prevent="onCreatePost()">
+        <button @click="showForm = !showForm" class="button is-primary">Toggle Form</button>
+        <form v-if="showForm" @submit.prevent="onCreatePost()">
             <b-field label="Title">
                 <b-input v-model="post.title" required></b-input>
             </b-field>
@@ -16,6 +17,7 @@
             </b-field>
             <button class="button is-success">Add Post</button>
         </form>
+        <pre>{{posts}}</pre>
     </section>
 </template>
 
@@ -23,6 +25,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
   export default {
     data: () => ({
+        showForm: false,
         post: {
             title: '',
             description: '',
@@ -30,8 +33,20 @@ import { mapState, mapActions, mapGetters } from 'vuex';
         }
     }),
     mounted() {
-      this.initSubreddit(this.$route.params.name);
+        this.initSubreddit(this.$route.params.name);
     },
+
+    watch: {
+        '$route.params.name'(){
+            this.initSubreddit(this.$route.params.name);
+        },
+        subreddit(){
+            if(this.subreddit.id){
+                this.initPosts(this.subreddit.id);
+            }
+        },
+    },
+
     computed: {
         ...mapState('subreddit', ['posts']),
         ...mapGetters('subreddit', ['subreddit'])
