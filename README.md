@@ -28,9 +28,10 @@
   
 ## Extra
 * [✔] Hide submit form if not logged in
-* [ ] Show Usernames
-* [ ] Show User Images
-* [ ] Format Dates
+* [✔] Show Usernames
+* [✔] Show User Images
+* [✔] Format Dates
+* [✔] Fix card Formats
 * [ ] UpVote/DownVote Posts
   * Update Rules
   * [ ] Order by total score

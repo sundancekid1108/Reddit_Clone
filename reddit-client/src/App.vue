@@ -23,7 +23,7 @@
                 <figcaption>{{user.name}}</figcaption>
               </span>
               <a class="button is-primary" @click="logout()">
-                Logout
+                LogOut
               </a>
             </p>
           </div>
@@ -42,7 +42,6 @@ export default {
   methods: mapActions('auth', ['login', 'logout'])
 };
 </script>
-
 
 <style lang="scss">
 .main {
