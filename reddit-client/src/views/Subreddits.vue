@@ -1,4 +1,3 @@
-
 <template>
   <aside class="menu">
     <p class="menu-label">
@@ -11,7 +10,6 @@
           {{subreddit.name}}
         </router-link>
       </li>
-      
     </ul>
   </aside>
 </template>
