@@ -25,26 +25,33 @@
   * Update Rules
 * [✔] Display Posts on Subreddit Page
   * Types: Image/Text/Url
+  
+## Extra
+* [✔] Hide submit form if not logged in
+* [ ] Show Usernames
+* [ ] Show User Images
+* [ ] Format Dates
 * [ ] UpVote/DownVote Posts
   * Update Rules
   * [ ] Order by total score
+  * [ ] Order by created
 * [ ] Add comment to Post
   * Update Rules
 * [ ] User Profile
   * [ ] Show Submitted Posts
   * [ ] Show UpVoted Posts
   * [ ] Show Comments
-
-## Extra
 * [ ] Edit Post
 * [ ] Edit Comment
 * [ ] Search/Filter Posts
 * [ ] UpVote/DownVote Comment
 * [ ] Reply to Comment
+* [ ] Display Error Image if bad link/error
 * [ ] Cloud Function Score Aggregator
   * https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
 * [ ] Delete Post
   * [ ] Cloud Function "Cascade Delete" comments
+* [ ] Upload Images to Firebase storage
 
 ## Resources
 

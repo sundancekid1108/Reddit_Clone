@@ -1,9 +1,7 @@
-
-
 <template>
   <section>
-    <button @click="showForm = !showForm" class="button is-primary">Toggle Form</button>
-        <form v-if="showForm" @submit.prevent="onCreatePost()">
+    <button v-if="isLoggedIn" @click="showForm = !showForm" class="button is-primary">Toggle Form</button>
+        <form v-if="showForm && isLoggedIn" @submit.prevent="onCreatePost()">
             <b-field label="Title">
                 <b-input v-model="post.title" required></b-input>
             </b-field>
@@ -17,7 +15,7 @@
         </form>
 
     <div class="posts columns is-multiline">
-      <div class="card column is-4" v-for="post in posts" :key="post.id">
+      <div class="card column is-4" v-for="(post, index) in posts" :key="post.id">
         <div class="card-image" v-if="isImage(post.URL)">
           <figure class="image">
             <img :src="post.URL" alt="Placeholder image">
@@ -40,7 +38,7 @@
           <div class="content">
             {{post.description}}
             <br>
-            <time datetime="2016-1-1">{{post.created_at}}</time>
+            <time>{{getCreated(index)}}</time>
           </div>
         </div>
       </div>
@@ -76,7 +74,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 
     computed: {
         ...mapState('subreddit', ['posts']),
-        ...mapGetters('subreddit', ['subreddit'])
+        ...mapState('auth', ['isLoggedIn', 'user']),
+        ...mapGetters({subreddit: 'subreddit/subreddit'}),
     },
     methods: {
         isImage(url) {
@@ -90,19 +89,51 @@ import { mapState, mapActions, mapGetters } from 'vuex';
             }
             
         },
-    ...mapActions('subreddit', ['createPost', 'initSubreddit', 'initPosts']),
-    async onCreatePost() {
-        if (this.post.title && (this.post.description || this.post.URL)) {
-                this.createPost(this.post);
-                this.post = {
-                    title: '',
-                    description: '',
-                    url: ''
-                };
+        ...mapActions('subreddit', ['createPost', 'initSubreddit', 'initPosts']),
+        async onCreatePost() {
+            if (this.post.title && (this.post.description || this.post.URL)) {
+                    
+                    this.createPost(this.post);
+                    this.post = {
+                        title: '',
+                        description: '',
+                        url: ''
+                    };
                 this.showForm = false;
+            }
+        }, 
+        getCreated(index) {
+          const timeSince = (date) => {
+          // console.log(index);
+          // console.log(date);
+          const seconds = Math.floor((new Date() - date) / 1000);
+          let interval = Math.floor(seconds / 31536000);
+          if (interval > 1) {
+            return interval + " years";
+          }
+          interval = Math.floor(seconds / 2592000);
+          if (interval > 1) {
+            return interval + " months";
+          }
+          interval = Math.floor(seconds / 86400);
+          if (interval > 1) {
+            return interval + " days";
+          }
+          interval = Math.floor(seconds / 3600);
+          if (interval > 1) {
+            return interval + " hours";
+          }
+          interval = Math.floor(seconds / 60);
+          if (interval > 1) {
+            return interval + " minutes";
+          }
+          return Math.floor(seconds) + " seconds";
         }
-    }
+          return timeSince(this.posts[index].created_at.seconds *1000) < 0 ? '0 seconds' + ' ago' : timeSince(this.posts[index].created_at.seconds *1000) + ' ago'
+      }    
+    
     },
+    
   };
 </script>
 
