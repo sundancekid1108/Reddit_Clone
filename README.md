@@ -31,7 +31,7 @@
 * [✔] Show Usernames
 * [✔] Show User Images
 * [✔] Format Dates
-* [✔] Fix card Formats
+* [✔] Fix card Formatting
 * [ ] UpVote/DownVote Posts
   * Update Rules
   * [ ] Order by total score
@@ -57,3 +57,5 @@
 ## Resources
 
 * https://angularfirebase.com/tag/firestore/
+
+![](./ERD.png)

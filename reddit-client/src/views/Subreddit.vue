@@ -14,36 +14,55 @@
             <button class="button is-success">Add Post</button>
         </form>
 
+        <form class="search-form">
+          <b-field label="Search">
+                <b-input v-model="searchTerm" required></b-input>
+            </b-field>
+        </form>
+
     <div class="posts columns is-multiline is-4">
-      <div class="card column is-4" v-for="(post, index) in posts" :key="post.id">
-        <div class="card-image" v-if="isImage(post.URL)" alt="Placeholder image">
-          <figure class="image">
-            <img :src="post.URL" alt="Placeholder image">
-          </figure>
-        </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-48x48">
-                <img :src="loadedUsersById[post.user_id].image" alt="Placeholder image">
-               
-              </figure>
-            </div>
-            <div class="media-content">
-              <p class="title is-4" v-if="!post.URL">{{post.title}}</p>
-              <p class="title is-4" v-if="post.URL"><a :href="post.URL" target="_blank">{{post.title}}</a></p>
-              <p class="subtitle is-6">@{{loadedUsersById[post.user_id].name}}</p>
+      <div class="column is-4" v-for="(post, index) in filteredPosts" :key="post.id">
+        <div class="card">
+          <div class="card-image" v-if="isImage(post.URL)" alt="Placeholder image">
+            <figure class="image">
+              <img :src="post.URL" alt="Placeholder image">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img :src="loadedUsersById[post.user_id].image" alt="Placeholder image">
+                
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4" v-if="!post.URL">{{post.title}}</p>
+                <p class="title is-4" v-if="post.URL"><a :href="post.URL" target="_blank">{{post.title}}</a></p>
+                <p class="subtitle is-6">@{{loadedUsersById[post.user_id].name}}</p>
+              </div>
               
+            </div>
+            
+            <div class="content">
+              {{post.description}}
+              <br>
+              <time>{{getCreated(index)}}</time>
             </div>
           </div>
 
-          <div class="content">
-            {{post.description}}
-            <br>
-            <time>{{getCreated(index)}}</time>
-          </div>
+          <!-- <div>
+            <footer class="card-footer">
+              <a href="#" class="card-footer-item">Edit</a>
+              <a href="#" class="card-footer-item">Delete</a>
+            </footer>
+          </div> -->
+          
         </div>
+
+
       </div>
+      
     </div>
   </section>
 </template>
@@ -53,6 +72,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
   export default {
     data: () => ({
         showForm: false,
+        searchTerm: '',
         post: {
             title: '',
             description: '',
@@ -90,7 +110,15 @@ import { mapState, mapActions, mapGetters } from 'vuex';
               };
               return byId;
             }, {});
-        }
+        },
+        filteredPosts(){
+          if(this.searchTerm){
+            const regexp = new RegExp(this.searchTerm, 'gi');
+            return this.posts.filter(post =>
+            (post.title + post.description).match(regexp));
+          }
+          return this.posts;
+        },
     },
     methods: {
         isImage(url) {
@@ -119,30 +147,35 @@ import { mapState, mapActions, mapGetters } from 'vuex';
         }, 
         getCreated(index) {
           const timeSince = (date) => {
-          // console.log(index);
-          // console.log(date);
-          const seconds = Math.floor((new Date() - date) / 1000);
-          let interval = Math.floor(seconds / 31536000);
-          if (interval > 1) {
-            return interval + " years";
-          }
-          interval = Math.floor(seconds / 2592000);
-          if (interval > 1) {
-            return interval + " months";
-          }
-          interval = Math.floor(seconds / 86400);
-          if (interval > 1) {
-            return interval + " days";
-          }
-          interval = Math.floor(seconds / 3600);
-          if (interval > 1) {
-            return interval + " hours";
-          }
-          interval = Math.floor(seconds / 60);
-          if (interval > 1) {
-            return interval + " minutes";
-          }
-          return Math.floor(seconds) + " seconds";
+            // console.log(index);
+            // console.log(date);
+            const seconds = Math.floor((new Date() - date) / 1000);
+            if(!seconds){
+              return (seconds +=0 );
+            }
+            let interval = Math.floor(seconds / 31536000);
+            
+            if (interval > 1) {
+              return `${interval} years`;
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) {
+              return `${interval} months`;
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) {
+              return `${interval} days`;
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) {
+              return `${interval} hours`;
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) {
+              return `${interval} minutes`;
+            }
+
+            return Math.floor(seconds) + " seconds";  
         }
           return timeSince(this.posts[index].created_at.seconds *1000) < 0 ? '0 seconds' + ' ago' : timeSince(this.posts[index].created_at.seconds *1000) + ' ago'
       }    
@@ -158,6 +191,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 }
 
 .card {
+  height: 100%;
   margin: 1%;
   border-radius: 5px;
 }
@@ -165,4 +199,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 .card img {
   border-radius: 5px;
 }
+.search-form {
+        margin-top: 2em;
+    }
 </style>
