@@ -50,7 +50,7 @@
 * [ ] Display Error Image if bad link/error
 * [ ] Cloud Function Score Aggregator
   * https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
-* [ ] Delete Post
+* [✔] Delete Post
   * [ ] Cloud Function "Cascade Delete" comments
 * [ ] Upload Images to Firebase storage
 

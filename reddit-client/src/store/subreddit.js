@@ -38,6 +38,10 @@ const actions = {
 
     },
 
+    async deletePost(_, post_id) {
+        await posts.doc(post_id).delete();
+    },
+
     initSubreddit: firestoreAction(({ bindFirestoreRef }, name) => {
         bindFirestoreRef('subreddits', db.collection('subreddits').where('name', '==', name));
 
@@ -45,6 +49,10 @@ const actions = {
     initPosts: firestoreAction(({ bindFirestoreRef }, subreddit_id) => {
         bindFirestoreRef('posts', posts.where('subreddit_id', '==', subreddit_id));
     }),
+
+
+
+
 };
 
 export default {

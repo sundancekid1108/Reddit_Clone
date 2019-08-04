@@ -1,97 +1,47 @@
 <template>
-  <section>
-      <button v-if="isLoggedIn"
-          @click="showForm = !showForm"
-          class="button is-primary">Toggle Form</button>
-      <form v-if="showForm && isLoggedIn"
-          @submit.prevent="onCreatePost()">
-          <b-field label="Title">
-              <b-input v-model="post.title"
-                  required></b-input>
-          </b-field>
-          <b-field label="Description">
-              <b-input type="textarea"
-                  v-model="post.description"></b-input>
-          </b-field>
-          <b-field label="URL">
-              <b-input v-model="post.URL"
-                  type="url"></b-input>
-          </b-field>
-          <button class="button is-success">Add Post</button>
-      </form>
+    <section>
+        <h1>{{$route.params.post_id}}</h1>
+        <h1>{{$route.params.name}}</h1>
 
-      <form class="search-form">
-          <b-field label="Search">
-              <b-input v-model="searchTerm"
-                  required></b-input>
-          </b-field>
-      </form>
+<div class="card">
+  <div class="card-image">
+    <figure class="image is-4by3">
+      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4">John Smith</p>
+        <p class="subtitle is-6">@johnsmith</p>
+      </div>
+    </div>
 
-      <div class="posts columns is-multiline is-4">
-          <div class="column is-4"
-              v-for="(post, index) in filteredPosts"
-              :key="post.id">
-              <div class="card">
-                  <div class="card-image"
-                      v-if="isImage(post.URL)"
-                      alt="Placeholder image">
-                      <figure class="image">
-                          <img :src="post.URL"
-                              alt="Placeholder image">
-                      </figure>
-                  </div>
-                  <div class="card-content">
-                      <div class="media">
-                          <div class="media-left">
-                              <figure class="image is-48x48">
-                                  <img :src="loadedUsersById[post.user_id].image"
-                                      alt="Placeholder image">
+    <div class="content">
+      
+      <br>
+      <time datetime="2016-1-1">시간</time>
+    </div>
+  </div>
 
-                              </figure>
-                          </div>
-                          <div class="media-content">
-                              <p class="title is-4"
-                                  v-if="!post.URL">{{post.title}}</p>
-                              <p class="title is-4"
-                                  v-if="post.URL"><a :href="post.URL"
-                                      target="_blank">{{post.title}}</a></p>
-                              <p class="subtitle is-6">@{{loadedUsersById[post.user_id].name}}</p>
-                          </div>
-
-                      </div>
-
-                      <div class="content">
-                          {{post.description}}
-                          <br>
-                          <time>{{getCreated(index)}}</time>
-                      </div>
-                  </div>
-
-                  
-                      <footer class="card-footer">
-                          <router-link                            
-                              :to="{
-                              name: 'post',
-                              params: {
-                                name: $route.params.name,
-                                post_id: post.id
-                              }
-                            }" class="card-footer-item">View Post</router-link>
+    <footer class="card-footer">
+                        
                           <a href="#"
                               class="card-footer-item" v-if="user && user.id == post.user_id">Edit</a>
                           <a class="card-footer-item" @click="deletePost(post.id)" v-if="user && user.id == post.user_id">Delete</a>
                       </footer>
-                  
-             
-  
 
-              </div>
+</div>
+    </section>
+ 
 
+ 
 
-          </div>
-
-      </div>
-  </section>
 </template>
 
 <script>
@@ -213,22 +163,5 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 </script>
 
 <style>
-.posts {
-  margin-top: 2em;
-}
 
-.card {
-  height: 100%;
-  margin: 1%;
-  border-radius: 5px;
-}
-
-
-
-.card img {
-  border-radius: 5px;
-}
-.search-form {
-        margin-top: 2em;
-    }
 </style>
