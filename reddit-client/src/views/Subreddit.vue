@@ -176,10 +176,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
           const timeSince = (date) => {
             // console.log(index);
             // console.log(date);
-            const seconds = Math.floor((new Date() - date) / 1000);
-            if(!seconds){
-              return (seconds +=0 );
-            }
+            const seconds = Math.floor((new Date() - date) / 1000 + 1);
+            
             let interval = Math.floor(seconds / 31536000);
             
             if (interval > 1) {

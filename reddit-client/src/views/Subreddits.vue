@@ -1,5 +1,7 @@
 <template>
-    <aside class="menu">
+    
+  <section>
+    <!-- <aside class="menu">
         <p class="menu-label">
             General
         </p>
@@ -11,7 +13,18 @@
                 </router-link>
             </li>
         </ul>
-    </aside>
+    </aside> -->
+    <div class="posts columns is-multiline is-4">
+      <div class="column is-4" v-for="subreddit in subreddits"
+                :key="subreddit.id">
+      <div class="card" >
+        <router-link :to="{ name: 'subreddit', params: { name: subreddit.name } }">
+                    {{subreddit.name}}
+                </router-link>
+      </div>
+      </div>        
+  </div>
+  </section> 
 </template>
 
 <script>
@@ -24,3 +37,14 @@
     methods: mapActions('subreddits', ['init']),
   };
 </script>
+
+<style>
+
+.card {
+  height: 100%;
+  margin: 1%;
+  border-radius: 5px;
+  
+}
+
+</style>
