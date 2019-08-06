@@ -61,9 +61,15 @@
                       </div>
 
                       <div class="content">
+                          
                           {{post.description}}
                           <br>
                           <time>{{getCreated(index)}}</time>
+                          <br>
+                          <time>{{post.updated_at}}</time>
+                          <br>
+                          <time>time {{getUpdateDate(index)}}</time>
+                          
                       </div>
                   </div>
 
@@ -74,6 +80,7 @@
                               name: 'post',
                               params: {
                                 name: $route.params.name,
+                                post: post,
                                 post_id: post.id
                               }
                             }" class="card-footer-item">View Post</router-link>
@@ -129,6 +136,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
           subreddit: 'subreddit/subreddit',
           usersById: 'users/usersById',
         }),
+
+        //user 정보 불러오기 ..
         loadedUsersById() {
           return this.posts.reduce((byId, post) => {
               byId[post.user_id] = this.usersById[post.user_id] || {
@@ -138,6 +147,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
               return byId;
             }, {});
         },
+
+        // 게시물 검색
         filteredPosts(){
           if(this.searchTerm){
             const regexp = new RegExp(this.searchTerm, 'gi');
@@ -148,6 +159,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
         },
     },
     methods: {
+        //URL이미지 체크
         isImage(url) {
             // console.log(url);
             if(!url){
@@ -160,22 +172,31 @@ import { mapState, mapActions, mapGetters } from 'vuex';
         },
         ...mapActions('subreddit', ['createPost', 'initSubreddit', 'initPosts', 'deletePost']),
         ...mapActions('users', {initUsers: 'init'}),
+
         async onCreatePost() {
             if (this.post.title && (this.post.description || this.post.URL)) {
                     
                     this.createPost(this.post);
+                    console.log(this.post);
                     this.post = {
                         title: '',
                         description: '',
                         url: ''
                     };
                 this.showForm = false;
+                console.log(this);
+                
             }
         }, 
+
         getCreated(index) {
           const timeSince = (date) => {
-            // console.log(index);
-            // console.log(date);
+            // console.log("index" + index);
+            // console.log("date " + date);
+
+            // const testdate = new Date(date);
+            // console.log(testdate);
+            // console.log(typeof(testdate));
             const seconds = Math.floor((new Date() - date) / 1000 + 1);
             
             let interval = Math.floor(seconds / 31536000);
@@ -202,9 +223,23 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 
             return Math.floor(seconds) + " seconds";  
         }
-          return timeSince(this.posts[index].created_at.seconds *1000) < 0 ? '0 seconds' + ' ago' : timeSince(this.posts[index].created_at.seconds *1000) + ' ago'
-      }    
-    
+            return timeSince(this.posts[index].created_at.seconds *1000) < 0 ? '0 seconds' + ' ago' : timeSince(this.posts[index].created_at.seconds *1000) + ' ago';
+          
+      },
+
+      getUpdateDate(index){
+          const getDate = (date) => {
+              console.log(date);
+              const converDate = new Date(date);
+              console.log(converDate);
+              return converDate;
+              
+          }
+          return getDate(this.posts[index].updated_at.seconds *1000)
+      }
+
+        
+        
     },
     
   };

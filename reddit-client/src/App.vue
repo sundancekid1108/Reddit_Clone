@@ -15,6 +15,14 @@
                 Login with Google
               </a>
             </p>
+
+            <p class="control" v-if="!isLoggedIn">
+              <a class="button is Danger" @click="facebookLogin()">
+                Login with Facebook
+              </a>
+            </p>
+
+
             <p class="control logged-in" v-if="isLoggedIn">
               <span class="avatar">
                 <figure>
@@ -39,7 +47,7 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   computed: mapState('auth', ['user', 'isLoggedIn']),
-  methods: mapActions('auth', ['login', 'logout'])
+  methods: mapActions('auth', ['login', 'logout', 'facebookLogin'])
 };
 </script>
 

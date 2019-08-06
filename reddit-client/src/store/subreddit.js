@@ -34,8 +34,6 @@ const actions = {
         } catch (error) {
             console.error(error);
         }
-
-
     },
 
     async deletePost(_, post_id) {

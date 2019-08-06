@@ -6,6 +6,7 @@ import router from '@/router';
 
 
 firebase.auth().onAuthStateChanged((user) => {
+    // console.log(user);
     if (user) {
         if (user.user) {
             user = user.user;

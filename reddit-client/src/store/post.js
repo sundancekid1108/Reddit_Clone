@@ -8,11 +8,12 @@ import { firestoreAction } from 'vuexfire';
 import db from '@/db';
 import firebase from '@/firebase';
 
-const posts = db.collection('posts')
+const comments = db.collection('comments')
 
 const state = {
     subreddits: [],
     posts: [],
+    comments: [],
 };
 
 const getters = {
@@ -20,12 +21,9 @@ const getters = {
 }
 
 const actions = {
-    initSubreddit: firestoreAction(({ bindFirestoreRef }, name) => {
-        bindFirestoreRef('subreddits', db.collection('subreddits').where('name', '==', name));
+    initComment: firestoreAction(({ bindFirestoreRef }, name) => {
+        bindFirestoreRef('comments', db.collection('comments').where('name', '==', name));
 
-    }),
-    initPosts: firestoreAction(({ bindFirestoreRef }, subreddit_id) => {
-        bindFirestoreRef('posts', posts.where('subreddit_id', '==', subreddit_id));
     }),
 
 

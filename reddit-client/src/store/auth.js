@@ -26,6 +26,11 @@ const actions = {
     async logout() {
         await firebase.auth().signOut();
     },
+
+    async facebookLogin() {
+        const provider = new firebase.auth.FacebookAuthProvider();
+        await firebase.auth().signInWithPopup(provider);
+    },
 };
 
 export default {

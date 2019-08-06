@@ -18,9 +18,12 @@
       <div class="column is-4" v-for="subreddit in subreddits"
                 :key="subreddit.id">
       <div class="card" >
-        <router-link :to="{ name: 'subreddit', params: { name: subreddit.name } }">
+        <div class="card-content">
+          <router-link :to="{ name: 'subreddit', params: { name: subreddit.name } }">
                     {{subreddit.name}}
-                </router-link>
+          </router-link>
+        </div>
+        
       </div>
       </div>        
   </div>
