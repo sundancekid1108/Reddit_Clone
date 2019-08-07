@@ -64,11 +64,10 @@
                           
                           {{post.description}}
                           <br>
-                          <time>{{getCreated(index)}}</time>
+                          <!-- <time>{{getCreated(index)}}</time> -->
                           <br>
-                          <time>{{post.updated_at}}</time>
-                          <br>
-                          <time>time {{getUpdateDate(index)}}</time>
+                          
+                          <time>{{getUpdateDate(index)}}</time>
                           
                       </div>
                   </div>
@@ -81,22 +80,17 @@
                               params: {
                                 name: $route.params.name,
                                 post: post,
-                                post_id: post.id
+                                post_id: post.id,
+                                user_name: loadedUsersById[post.user_id].name,
+                                user_thumbnail: loadedUsersById[post.user_id].image 
                               }
                             }" class="card-footer-item">View Post</router-link>
                           <a href="#"
                               class="card-footer-item" v-if="user && user.id == post.user_id">Edit</a>
                           <a class="card-footer-item" @click="deletePost(post.id)" v-if="user && user.id == post.user_id">Delete</a>
                       </footer>
-                  
-             
-  
-
               </div>
-
-
           </div>
-
       </div>
   </section>
 </template>
@@ -229,9 +223,9 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 
       getUpdateDate(index){
           const getDate = (date) => {
-              console.log(date);
+            //   console.log(date);
               const converDate = new Date(date);
-              console.log(converDate);
+            //   console.log(converDate);
               return converDate;
               
           }

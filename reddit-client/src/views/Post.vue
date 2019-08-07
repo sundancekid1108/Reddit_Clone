@@ -1,88 +1,115 @@
 <template>
 <section>
-    <h1>route.params.post_id  {{$route.params.post_id}}</h1>
-    <h1>route.params.name  {{$route.params.name}}</h1>
+    <h1>route.params  {{$route.params.post_id}}</h1>
+    <br>
+    <h1>route.params  {{$route.params}}</h1>
+    <br>
+    <h1>this.route.params  {{this.$route.params}}</h1>
+    <br>
     <h1>route.params.post  {{$route.params.post}}</h1>
-    <!-- <h1>post_id {{post_id}}</h1> -->
+    <br>
+    <h1>user  {{user}}</h1>
+    <br>
+    <h1>posts  {{posts}}</h1>
+    <br>
+    <h1>this.post  {{this.post}}</h1>
+
     
     <div class="card">
-  <div class="card-image">
-      
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-       
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-        
-      </div>
-      <div class="media-content">
-        <p class="title is-4">여기에 타이틀</p>
-        <p class="subtitle is-6">@여기에 유저명</p>
-      </div>
+        <div class="card-image">
+
+            <figure class="image is-4by3">
+                <img src="https://bulma.io/images/placeholders/1280x960.png"
+                    alt="Placeholder image">
+            </figure>
+        </div>
+        <div class="card-content">
+
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-48x48">
+                        <img src="https://bulma.io/images/placeholders/96x96.png"
+                            alt="Placeholder image">
+                    </figure>
+
+                </div>
+                <div class="media-content">
+                    <p class="title is-4">여기에 타이틀</p>
+                    <p class="subtitle is-6">@여기에 유저명</p>
+                </div>
+            </div>
+
+            <div class="content">
+                여기에 description
+
+                <br>
+                <time datetime="2016-1-1">여기 시간</time>
+            </div>
+        </div>
+        <footer class="card-footer"
+            v-if="user && user.id == $route.params.post.user_id">
+            <a href="#"
+                class="card-footer-item"
+                @click="showForm = !showForm">Edit Post </a>
+            <a href="#"
+                class="card-footer-item">Delete</a>
+        </footer>
     </div>
 
-    <div class="content">
-     여기에 description
-      
-      <br>
-      <time datetime="2016-1-1">여기 시간</time>
+    <div class="card"
+        v-if="showForm">
+        <div class="card-content">
+            <form @submit.prevent="onEditPost()">
+                <b-field label="Title">
+                    <b-input v-model="post.title"
+                        required></b-input>
+                </b-field>
+                <b-field label="Description">
+                    <b-input type="textarea"
+                        v-model="post.description"></b-input>
+                </b-field>
+                <b-field label="URL">
+                    <b-input v-model="post.URL"
+                        type="url"></b-input>
+                </b-field>
+                <button class="button is-success">Edit Post</button>
+            </form>
+        </div>
     </div>
-  </div>
-  <footer class="card-footer" v-if="isLoggedIn">
-    <a href="#" class="card-footer-item" @click="showForm = !showForm">Edit Post </a>
-    <a href="#" class="card-footer-item">Delete</a>
-  </footer>
-</div>
 
-<div class="card" v-if="showForm">
-    <div class="card-content">
-        <form 
-          @submit.prevent="onEditPost()">
-          <b-field label="Title">
-              <b-input v-model="post.title"
-                  required></b-input>
-          </b-field>
-          <b-field label="Description">
-              <b-input type="textarea"
-                  v-model="post.description"></b-input>
-          </b-field>
-          <b-field label="URL">
-              <b-input v-model="post.URL"
-                  type="url"></b-input>
-          </b-field>
-          <button class="button is-success">Edit Post</button>
-      </form>
+    <div class="card"
+        v-if="isLoggedIn">
+        <div class="card-content">
+            <textarea class="textarea"
+                placeholder="Reply"></textarea>
+        </div>
+        <footer class="card-footer">
+            <p class="card-footer-item">
+                <span>
+                    Add Comment
+                </span>
+            </p>
+        </footer>
     </div>
-</div>
 
-<div class="card" v-if="isLoggedIn">
-  <div class="card-content">
-    <textarea class="textarea" placeholder="Reply"></textarea>
-  </div>
-  <footer class="card-footer">
-    <p class="card-footer-item">
-      <span>
-        Add Comment
-      </span>
-    </p>
-    <p class="card-footer-item">
-      <span>
-        Edit Comment
-      </span>
-    </p>
-    <p class="card-footer-item">
-      <span>
-        Delete Comment
-      </span>
-    </p>
-  </footer>
-</div>
+    <div class="card">
+        <div class="card-content">
+            여기에 코멘트
+        </div>
+        <footer class="card-footer">
+
+            <p class="card-footer-item">
+                <span>
+                    Edit Comment
+                </span>
+            </p>
+            <p class="card-footer-item">
+                <span>
+                    Delete Comment
+                </span>
+            </p>
+        </footer>
+    </div>
 
 
 </section>
@@ -111,6 +138,7 @@
 
         computed: {
           ...mapState('auth', ['isLoggedIn', 'user']),
+          ...mapState('subreddit', ['posts']),
         },
 
         methods: {
