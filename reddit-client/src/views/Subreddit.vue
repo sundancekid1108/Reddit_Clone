@@ -81,12 +81,10 @@
                                 name: $route.params.name,
                                 post: post,
                                 post_id: post.id,
-                                user_name: loadedUsersById[post.user_id].name,
-                                user_thumbnail: loadedUsersById[post.user_id].image 
+                                post_URL: post.URL
                               }
                             }" class="card-footer-item">View Post</router-link>
-                          <a href="#"
-                              class="card-footer-item" v-if="user && user.id == post.user_id">Edit</a>
+                          
                           <a class="card-footer-item" @click="deletePost(post.id)" v-if="user && user.id == post.user_id">Delete</a>
                       </footer>
               </div>
@@ -220,7 +218,8 @@ import { mapState, mapActions, mapGetters } from 'vuex';
             return timeSince(this.posts[index].created_at.seconds *1000) < 0 ? '0 seconds' + ' ago' : timeSince(this.posts[index].created_at.seconds *1000) + ' ago';
           
       },
-
+    
+        //날짜
       getUpdateDate(index){
           const getDate = (date) => {
             //   console.log(date);
@@ -229,6 +228,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
               return converDate;
               
           }
+        //   console.log(this.posts[index].updated_at.seconds);
           return getDate(this.posts[index].updated_at.seconds *1000)
       }
 

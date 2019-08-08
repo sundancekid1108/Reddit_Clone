@@ -4,6 +4,10 @@
     <br>
     <h1>route.params  {{$route.params}}</h1>
     <br>
+    <h1>route.params.post.URL  {{$route.params.post.URL}}</h1>
+    <br>
+    <h1>route.params.post_URL  {{$route.params.post_URL}}</h1>
+    <br>
     <h1>this.route.params  {{this.$route.params}}</h1>
     <br>
     <h1>route.params.post  {{$route.params.post}}</h1>
@@ -16,43 +20,48 @@
 
     
     <div class="card">
-        <div class="card-image">
-
-            <figure class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png"
-                    alt="Placeholder image">
-            </figure>
-        </div>
+        <div class="card-image"
+                      v-if="isImage($route.params.post.URL)"
+                      alt="Placeholder image">
+                      <figure class="image">
+                          <img :src="$route.params.post.URL"
+                              alt="Placeholder image">
+                      </figure>
+                  </div>
         <div class="card-content">
-
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png"
+                        <img :src="loadedUsersById[$route.params.post.user_id].image"
                             alt="Placeholder image">
                     </figure>
 
                 </div>
                 <div class="media-content">
-                    <p class="title is-4">여기에 타이틀</p>
-                    <p class="subtitle is-6">@여기에 유저명</p>
+                    <p class="title is-4"
+                        v-if="!$route.params.post.URL">{{$route.params.post.title}}</p>
+                    <p class="title is-4"
+                        v-if="$route.params.post.URL"><a :href="$route.params.post.URL"
+                            target="_blank">{{$route.params.post.title}}</a></p>
+                    <p class="subtitle is-6">@{{loadedUsersById[$route.params.post.user_id].name}} </p>
                 </div>
             </div>
 
             <div class="content">
-                여기에 description
+                {{$route.params.post.description}}
 
                 <br>
-                <time datetime="2016-1-1">여기 시간</time>
+                <time>{{getUpdateDate($route.params.post.updated_at)}}</time>
             </div>
         </div>
         <footer class="card-footer"
-            v-if="user && user.id == $route.params.post.user_id">
+            v-if="user && user.id == this.$route.params.post.user_id">
             <a href="#"
                 class="card-footer-item"
                 @click="showForm = !showForm">Edit Post </a>
-            <a href="#"
-                class="card-footer-item">Delete</a>
+            <a class="card-footer-item" @click="deleteThisPost($route.params.post.id)">
+              delete
+            </a>
         </footer>
     </div>
 
@@ -118,6 +127,8 @@
 
 <script>
     import { mapState, mapActions, mapGetters } from 'vuex';
+    import db from '@/db';
+
     export default {
         data: () => ({
           showForm: false,
@@ -139,9 +150,25 @@
         computed: {
           ...mapState('auth', ['isLoggedIn', 'user']),
           ...mapState('subreddit', ['posts']),
+          ...mapGetters({
+            subreddit: 'subreddit/subreddit',
+            usersById: 'users/usersById',
+          }),
+          // user정보 불러오기
+          loadedUsersById() {
+          return this.posts.reduce((byId, post) => {
+              byId[post.user_id] = this.usersById[post.user_id] || {
+                name: 'Loading...',
+                image: 'https://bulma.io/images/placeholders/48x48.png'
+              };
+              return byId;
+            }, {});
+        },
         },
 
         methods: {
+          ...mapActions('subreddit', ['createPost', 'initPosts', 'deletePost']),
+          ...mapActions('users', {initUsers: 'init'}),
           //URL이미지 체크
           isImage(url) {
               // console.log(url);
@@ -152,6 +179,18 @@
                   return url.match(/(png|jpg|jpeg|gif)$/);
                   
               }   
+          },
+
+          //날짜
+          getUpdateDate(date){
+              const getDate = (date) => {
+                //   console.log(date);
+                  const converDate = new Date(date);
+                //   console.log(converDate);
+                  return converDate;
+                  
+              }
+              return getDate(this.$route.params.post.updated_at.seconds *1000)
           },
 
           //  수정
@@ -167,7 +206,15 @@
                 this.showForm = false;
             }
           },
-      
+
+          async deleteThisPost(post_id) {
+              this.$router.go(-1);
+              this.deletePost(post_id);
+              // await db.collection('posts').doc(post_id).delete();
+
+          },  
+
+          
         },
 
         

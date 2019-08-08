@@ -46,7 +46,10 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  computed: mapState('auth', ['user', 'isLoggedIn']),
+  computed: {
+    ...mapState('auth', ['user', 'isLoggedIn']),
+    ...mapState('subreddits', ['subreddits']),
+  },
   methods: mapActions('auth', ['login', 'logout', 'facebookLogin'])
 };
 </script>
